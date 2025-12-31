@@ -25,7 +25,7 @@ int main() {
                 received_count++;
             } else {
                 // 데이터가 없으면 잠시 쉬거나 busy-wait
-                std::this_thread::yield(); 
+                std::this_thread::yield();
             }
         }
     });
@@ -35,6 +35,7 @@ int main() {
 
     for (int i = 0; i < TOTAL_OPERATIONS; ++i) {
         ProfileEvent ev{ static_cast<uint32_t>(i), 123456789ULL };
+        for(volatile int j=0; j<100; ++j);
         
         // Strict Mode: 큐가 차있으면 기다리지 않고 버림
         if (!queue.push(ev)) {
